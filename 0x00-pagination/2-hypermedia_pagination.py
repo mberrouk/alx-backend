@@ -50,8 +50,8 @@ class Server:
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict[str, str]:
         """ Hypermedia pagination
         """
-        beg, end = index_range(page, page_size)
         data = self.get_page(page, page_size)
+        beg, end = index_range(page, page_size)
 
         dictData = {
             "page_size": len(data),
@@ -59,6 +59,6 @@ class Server:
             "data": data,
             "next_page": page + 1 if end < len(self.__dataset) else None,
             "prev_page": page - 1 if beg > 0 else None,
-            "total_page": math.ceil(len(self.__dataset) / page_size)
+            "total_pages": math.ceil(len(self.__dataset) / page_size)
         }
         return dictData
