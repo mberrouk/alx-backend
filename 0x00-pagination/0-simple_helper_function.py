@@ -3,7 +3,8 @@
 Implementing Simple Pagination.
 """
 
-def index_range(page:int, page_size:int) -> tuple[int, int]:
+
+def index_range(page: int, page_size: int) -> tuple[int, int]:
     """
     Found a start index and end index.
     """
