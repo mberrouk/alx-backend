@@ -47,7 +47,7 @@ class Server:
             return []
         return data[beg:end]
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict[str, str]:
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
         """ Hypermedia pagination
         """
         data = self.get_page(page, page_size)
