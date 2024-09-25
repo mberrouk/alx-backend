@@ -51,15 +51,14 @@ class Server:
         assert type(page) is int and type(page_size) is int
         assert page > 0 and page_size > 0
         beg, end = index_range(page, page_size)
-        data = self.dataset()
-        # if beg > len(data) or end > len(data):
-        #     return []
+        data = self.get_page(page, page_size)
+
         dictData = {
             "page_size": len(data),
             "page": page,
-            "data": data[beg:end],
+            "data": data,
             "next_page": end + 1 if end < len(data) else None,
-            "prev_page": beg - 1 if beg > 1 else None,
-            "total_page": len(data)
+            "prev_page": page - 1 if page > 1 else None,
+            "total_page": math.ceil(len(self.__dataset) / page_size)
         }
         return dictData
