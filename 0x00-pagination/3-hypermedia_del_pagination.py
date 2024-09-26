@@ -42,33 +42,27 @@ class Server:
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
         """
-        self.indexed_dataset()
+        data = self.indexed_dataset()
         if self.__indexed_dataset is None:
             return {}           # TODO
 
-        assert index is not None and index >= 0 and index < len(self.__indexed_dataset)
+        assert index is not None and index >= 0 and index <= max(data.keys())
 
         data_list = []
-        page_size = 0
-        keys = list(self.__indexed_dataset.keys())
-        if index in keys:
-            print("IF")
-            s = keys.index(index)
-            print(s)
-            # print(keys)
-            data_list = [self.__indexed_dataset[k] for k in keys[s:s + page_size]]
+        n_index = None
+        count = 0
 
-        print(data_list)
+        for key, val in data.items():
+            if count == page_size:
+                n_index = key
+                break
+            if key >= index:
+                data_list.append(val)
+                count += 1
+
         return {
             "index": index,
-            "next_index": 10,
-            "page_size": 210,
-            "data": 10 
+            "data": data_list,
+            "page_size": len(data_list),
+            "next_index": n_index,
         }
-
-server = Server()
-
-try:
-    server.get_hyper_index(1);
-except AssertionError:
-    print("ERROR")
